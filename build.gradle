@@ -1,0 +1,43 @@
+// The plugins block defines the Gradle plugins that are used in the project
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.1.4'
+    id 'io.spring.dependency-management' version '1.1.3'
+}
+
+group = 'org.as2'
+version = '1.0-SNAPSHOT'
+
+// The repositories block defines the dependency repositories that are used
+//to resolve dependencies
+repositories {
+    mavenCentral()
+}
+// The dependencies block specifies the dependencies that are used in the
+//project
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//    testImplementation platform('org.junit:junit-bom:5.10.0')
+//    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+// The tasks block defines the tasks that are part of the build process, such as testing.
+//tasks.named('test') {
+test {
+    useJUnitPlatform()
+}
+
+//Gradle is a build automation tool that makes the software development process simpler and
+//also unifies the development process. It manages our project dependencies and handles the
+//build process ; this is more flexible and faster than maven
+
+
+// there is local gradle installation and gradle wrapper ( wrapper is a script that invokes a declared
+//version of Gradle, and it standardizes your project to a given Gradle version.)
+
+//You can use either the Kotlin or Groovy
+//programming languages to write build.gradle files
+
+
