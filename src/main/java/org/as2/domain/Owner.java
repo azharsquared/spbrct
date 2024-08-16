@@ -1,5 +1,7 @@
 package org.as2.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -7,6 +9,8 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+// JsonIgnoreProperties is used to ignore the hibernateLazyInitializer and handler properties in the JSON response
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Owner {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,6 +20,7 @@ public class Owner {
     // mappedBy="owner" means that the owner field in the Vehicle class is the owning side of the relationship
     // The owner field is the foreign key in the vehicle table
     // cascade=CascadeType.ALL means that if the owner is deleted, all the vehicles associated with the owner will be deleted
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private List<Vehicle> vehicles;
 
