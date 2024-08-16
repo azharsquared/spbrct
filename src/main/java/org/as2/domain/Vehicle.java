@@ -14,10 +14,17 @@ public class Vehicle {
     private Long id;
     private String brand, model, color, registrationNumber;
     private int modelYear, price;
+    // Many vehicles can have one owner
+    // [default] FETchType.LAZY means when the owner is fetched from the database, the vehicles associated with the owner
+    //will be fetched when needed
+    // FetchType.EAGER means that the owner is fetched automatically
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner")
+    private Owner owner;
     @Column(name="explanation", nullable=false, length=512)
     private String description;
 
-    public Vehicle(String brand, String model, String color, String registrationNumber, int modelYear, int price, String description) {
+    public Vehicle(String brand, String model, String color, String registrationNumber, int modelYear, int price, String description,Owner owner) {
         this.brand = brand;
         this.model = model;
         this.color = color;
@@ -25,6 +32,7 @@ public class Vehicle {
         this.modelYear = modelYear;
         this.price = price;
         this.description = description;
+        this.owner = owner;
     }
 
     public Vehicle() {
@@ -81,6 +89,15 @@ public class Vehicle {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    // Getter and setter
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 
     public String getDescription() {

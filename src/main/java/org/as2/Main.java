@@ -1,5 +1,7 @@
 package org.as2;
 
+import org.as2.domain.Owner;
+import org.as2.domain.OwnerRepository;
 import org.as2.domain.Vehicle;
 import org.as2.domain.VehicleRepository;
 import org.slf4j.Logger;
@@ -7,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.Arrays;
 
 /**
  * @SpringBootApplication annotation, which is actually
@@ -33,9 +37,11 @@ public class Main implements CommandLineRunner {
     );
 
     private final VehicleRepository repository;
+    private final OwnerRepository ownerRepository;
 
-    public Main(VehicleRepository repository) {
+    public Main(VehicleRepository repository , OwnerRepository ownerRepository) {
         this.repository = repository;
+        this.ownerRepository = ownerRepository;
     }
 
     public static void main(String[] args) {
@@ -47,12 +53,15 @@ public class Main implements CommandLineRunner {
     // CommandLineRunner interface is used to run a piece of code when the application is started
     @Override
     public void run(String... args) throws Exception {
+        Owner owner1 = new Owner("John" , "Johnson");
+        Owner owner2 = new Owner("Mary" , "Robinson");
+        ownerRepository.saveAll(Arrays.asList(owner1, owner2));
         repository.save(new Vehicle("Ford", "Mustang", "Red",
-                "ADF-1121", 2023, 59000,"Fast car"));
+                "ADF-1121", 2023, 59000,"Fast car",owner1));
         repository.save(new Vehicle("Nissan", "Leaf", "White",
-                "SSJ-3002", 2020, 29000,"Fast car"));
+                "SSJ-3002", 2020, 29000,"Fast car",owner1));
         repository.save(new Vehicle("Toyota", "Prius",
-                "Silver", "KKO-0212", 2022, 39000,"reliable car"));
+                "Silver", "KKO-0212", 2022, 39000,"reliable car",owner2));
         // Fetch all cars and log to console
         for (Vehicle car : repository.findAll()) {
             logger.info("brand: {}, model: {}",
