@@ -1,9 +1,6 @@
 package org.as2;
 
-import org.as2.domain.Owner;
-import org.as2.domain.OwnerRepository;
-import org.as2.domain.Vehicle;
-import org.as2.domain.VehicleRepository;
+import org.as2.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -38,10 +35,12 @@ public class Main implements CommandLineRunner {
 
     private final VehicleRepository repository;
     private final OwnerRepository ownerRepository;
+    private final AppUserRepository appUserRepository;
 
-    public Main(VehicleRepository repository , OwnerRepository ownerRepository) {
+    public Main(VehicleRepository repository , OwnerRepository ownerRepository, AppUserRepository appUserRepository) {
         this.repository = repository;
         this.ownerRepository = ownerRepository;
+        this.appUserRepository = appUserRepository;
     }
 
     public static void main(String[] args) {
@@ -67,6 +66,13 @@ public class Main implements CommandLineRunner {
             logger.info("brand: {}, model: {}",
                     car.getBrand(), car.getModel());
         }
+
+        // Username: user, password: user
+        appUserRepository.save(new AppUser("user",
+                "$2a$10$NVM0n8ElaRgg7zWO1CxUdei7vWoPg91Lz2aYavh9.f9q0e4bRadue","USER"));
+        // Username: admin, password: admin
+        appUserRepository.save(new AppUser("admin",
+                        "$2a$10$8cjz47bjbR4Mn8GMg9IZx.vyjhLXR/SKKMSZ9.mP9vpMu0ssKi8GW", "ADMIN"));
 
     }
 }
