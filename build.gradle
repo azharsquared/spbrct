@@ -21,10 +21,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'jakarta.validation:jakarta.validation-api'
     implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.0.2'
-
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 //    runtimeOnly 'com.h2database:h2'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
     runtimeOnly 'org.postgresql:postgresql'
 //    testImplementation platform('org.junit:junit-bom:5.10.0')
 //    testImplementation 'org.junit.jupiter:junit-jupiter'
