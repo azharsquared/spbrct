@@ -8,10 +8,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenApiConfig {
     @Bean
-    public OpenAPI carDatabaseOpenAPI() {
+    public OpenAPI vehicleDatabaseOpenAPI() {
         return new OpenAPI()
-                .info(new Info().title("Car REST API")
-                        .description("My car stock")
+                .info(new Info().title("vehicle REST API")
+                        .description("My vehicle stock")
                         .version("1.0"));
     }
 }

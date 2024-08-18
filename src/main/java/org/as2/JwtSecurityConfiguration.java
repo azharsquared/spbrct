@@ -43,9 +43,21 @@ public class JwtSecurityConfiguration {
                 .cors(Customizer.withDefaults())
                 .sessionManagement((sessionManagement) -> sessionManagement.
                         sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // commented code will allow POST requests to /login without authentication and rest of the requests will be authenticated
+//                .authorizeHttpRequests((authorizeHttpRequests) ->
+//                        authorizeHttpRequests.requestMatchers(HttpMethod.POST,
+//                                "/login").permitAll().anyRequest().authenticated())
+                //Role based auth : The
+                ///admin/** endpoint requires the ADMIN role for access and the /user/** endpoint requires the
+                //USER role for access
                 .authorizeHttpRequests((authorizeHttpRequests) ->
-                        authorizeHttpRequests.requestMatchers(HttpMethod.POST,
-                                "/login").permitAll().anyRequest().authenticated())
+                        authorizeHttpRequests
+
+                                .requestMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/data-rest/user/**").hasRole("USER")
+                                .anyRequest().authenticated())
                 .addFilterBefore(authenticationFilter,
                 UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling((exceptionHandling) -> exceptionHandling.

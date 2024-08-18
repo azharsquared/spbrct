@@ -13,7 +13,7 @@ public class VehicleController {
     public VehicleController(VehicleRepository repository) {
         this.repository = repository;
     }
-    @GetMapping("/vehicles")
+    @GetMapping("user/vehicles")
     public Iterable<Vehicle> getVehicles() {
         return repository.findAll();
     }
