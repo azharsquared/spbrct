@@ -82,3 +82,7 @@ public class JwtSecurityConfiguration {
         return source;
     }
 }
+
+
+//TODO: explore @PreAuthorize, @PostAuthorize, @PreFilter, @PostFilter, and
+//@Secured annotations, which are used to apply method-level security
