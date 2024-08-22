@@ -1,5 +1,6 @@
 package org.as2;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,15 +13,25 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
 import java.util.Arrays;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
 public class JwtSecurityConfiguration {
+
+    @Value("${okta.oauth2.issuer}")
+    private String issuer;
+    @Value("${okta.oauth2.client-id}")
+    private String clientId;
 
     private final AuthenticationFilter authenticationFilter;
     private final AuthEntryPoint exceptionHandler;
@@ -40,7 +51,7 @@ public class JwtSecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws
             Exception {
         http.csrf(AbstractHttpConfigurer::disable) //(csrf) -> csrf.disable()
-                .cors(Customizer.withDefaults())
+                .cors(withDefaults())
                 .sessionManagement((sessionManagement) -> sessionManagement.
                         sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // commented code will allow POST requests to /login without authentication and rest of the requests will be authenticated
@@ -50,18 +61,25 @@ public class JwtSecurityConfiguration {
                 //Role based auth : The
                 ///admin/** endpoint requires the ADMIN role for access and the /user/** endpoint requires the
                 //USER role for access
-                .authorizeHttpRequests((authorizeHttpRequests) ->
-                        authorizeHttpRequests
-
-                                .requestMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                                .requestMatchers("/admin/**").hasRole("ADMIN")
-                                .requestMatchers("/data-rest/user/**").hasRole("USER")
-                                .anyRequest().authenticated())
-                .addFilterBefore(authenticationFilter,
-                UsernamePasswordAuthenticationFilter.class)
+//                .authorizeHttpRequests((authorizeHttpRequests) ->
+//                        authorizeHttpRequests
+//
+//                                .requestMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
+//                                .requestMatchers(HttpMethod.POST, "/login").permitAll()
+//                                .requestMatchers("/admin/**").hasRole("ADMIN")
+//                                .requestMatchers("/data-rest/user/**").hasRole("USER")
+//                                .anyRequest().authenticated())
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/", "/images/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .oauth2Login(withDefaults())
+//                .addFilterBefore(authenticationFilter,
+//                UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling((exceptionHandling) -> exceptionHandling.
-                        authenticationEntryPoint(exceptionHandler));
+                        authenticationEntryPoint(exceptionHandler))
+                .logout(logout -> logout
+                        .addLogoutHandler(logoutHandler()));
         return http.build();
     }
 
@@ -80,6 +98,17 @@ public class JwtSecurityConfiguration {
         config.applyPermitDefaultValues();
         source.registerCorsConfiguration("/**", config);
         return source;
+    }
+
+    private LogoutHandler logoutHandler() {
+        return (request, response, authentication) -> {
+            try {
+                String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+                response.sendRedirect(issuer + "v2/logout?client_id=" + clientId + "&returnTo=" + baseUrl);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        };
     }
 }
 
