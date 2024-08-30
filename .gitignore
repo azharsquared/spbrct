@@ -45,3 +45,10 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### react frontedn ###
+!**/src/main/**/node_modules/
+!**/src/test/**/package-lock.json
+!**/src/test/**/vite.config.js
+!**/src/test/**/public/
+src/main/resources/frontend/package-lock.json
