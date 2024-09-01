@@ -48,11 +48,57 @@ React hooks
                 };
             }, [dependencies]);
             ```
+        - strict mode
+            - useEffect is called twice in strict mode
+        - cleanup function is called when the component is unmounted (removed from the DOM)
     - useContext
     - useReducer
         - use when we have complex state logic
     - useMemo
     - useCallback
     - useRef
+        - returns a mutable object that persists for the lifetime of the component
+        - can be used to store a reference to a DOM element
+        - ```return (
+            <>
+            <input ref={inputRef} />
+            <button onClick={() => inputRef.current.focus()}>
+            Focus input
+            </button>
+            </>
+            ); ```
+    - custom hooks
+- Context API
+    - use with global state management
+    - ```javascript
+        const ThemeContext = React.createContext('light');
+        const App = () => {
+            return (
+                <ThemeContext.Provider value="dark">
+                    <Toolbar />
+                </ThemeContext.Provider>
+            );
+        };
+        const Toolbar = () => {
+            const theme = useContext(ThemeContext);
+            return <div>Theme: {theme}</div>;
+        };
+        ```
+- key prop
+    - helps React identify which items have changed, are added, or are removed
+    - ```javascript
+        const items = ['apple', 'banana', 'cherry'];
+        const listItems = items.map((item, index) => (
+            <li key={index}>{item}</li>
+        ));
+        ```
+    - uuid library can be used to generate unique keys
+      - ```javascript
+          import { v4 as uuidv4 } from 'uuid';
+          const items = ['apple', 'banana', 'cherry'];
+          const listItems = items.map(item => (
+              <li key={uuidv4()}>{item}</li>
+          ));
+          ```
 
 
