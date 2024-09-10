@@ -1,29 +1,25 @@
-import React, { useState } from 'react'
-import './App.css'
+// import React, { useState } from 'react'
+// // import './App.css'
+import Container from '@mui/material/Container'
+import CssBaseline from '@mui/material/CssBaseline'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
 
 function App() {
-  const [name, setName] = useState("")
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    {
-        setName(event.target.value);
-    }
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) =>
-    {
-        event.preventDefault();
-        alert(`Hello ${name}`);
-    }
-  return (
-      <>
-          <form onSubmit={handleSubmit}>
-              <input
-                  type="text"
-                  value={name}
-                  onChange={handleChange}
-              />
-              <input type="submit" value="Submit"/>
-          </form>
-      </>
-  )
+    return (
+        <Container maxWidth="xl">
+            <CssBaseline />
+            <AppBar position="static">
+                <Toolbar>
+                    <Typography variant="h6">
+                        YAY
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+        </Container>
+    )
+    
 }
 
-export default App
+export default App;
