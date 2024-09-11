@@ -6,6 +6,9 @@ import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+const queryClient = new QueryClient();
+
 function App() {
     return (
         <Container maxWidth="xl">
@@ -17,9 +20,11 @@ function App() {
                     </Typography>
                 </Toolbar>
             </AppBar>
+            <QueryClientProvider client={queryClient}>
+            </QueryClientProvider>
         </Container>
     )
-    
+
 }
 
 export default App;
