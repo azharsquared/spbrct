@@ -7,6 +7,8 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import VehicleList from './components/Vehiclelist';
+
 const queryClient = new QueryClient();
 
 function App() {
@@ -16,11 +18,12 @@ function App() {
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h6">
-                        YAY
+                        Car shop
                     </Typography>
                 </Toolbar>
             </AppBar>
             <QueryClientProvider client={queryClient}>
+                <VehicleList />
             </QueryClientProvider>
         </Container>
     )

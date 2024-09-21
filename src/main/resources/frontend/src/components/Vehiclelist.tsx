@@ -13,7 +13,8 @@ const VehicleList: React.FC<VehicleListProps> = (props) => {
     // Implement your component logic here
     const getVehicles = async (): Promise<VehicleResponse[]> => {
         const response = await axios.get("http://localhost:8080/user/vehicles");
-        return response.data.vehicles;
+        console.log(response.data);
+        return response.data;
     }
 
     const vehicleQuery = useQuery({
@@ -32,7 +33,7 @@ const VehicleList: React.FC<VehicleListProps> = (props) => {
                 <tbody>
                     {
                         vehicleQuery.data.map((vehicle: VehicleResponse) =>
-                            <tr key={vehicle._links.self.href}>
+                            <tr >
                                 <td>{vehicle.brand}</td>
                                 <td>{vehicle.model}</td>
                                 <td>{vehicle.color}</td>
