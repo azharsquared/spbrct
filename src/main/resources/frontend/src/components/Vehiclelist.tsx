@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getVehicles,deleteVehicle } from './VehicleApi';
 import { DataGrid,GridCellParams,GridColDef } from '@mui/x-data-grid';
 import Snackbar from '@mui/material/Snackbar';
+import AddVehicle from './AddVehicle';
 
 interface VehicleListProps {
     // Define the props for your component here
@@ -92,6 +93,7 @@ const VehicleList: React.FC<VehicleListProps> = (props) => {
             //     </tbody>
             // </table>
             <>
+            <AddVehicle />
             <DataGrid
             disableRowSelectionOnClick={true}
             rows={vehicleQuery.data}
