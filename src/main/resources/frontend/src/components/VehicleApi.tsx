@@ -6,3 +6,9 @@ export const getVehicles = async (): Promise<VehicleResponse[]> => {
     console.log(response.data);
     return response.data;
 }
+
+export const deleteVehicle = async (id: string): Promise<VehicleResponse> =>
+    {
+     const response = await axios.delete(`${import.meta.env.VITE_API_URL}/user/vehicle/${id}`);
+     return response.data
+    }
