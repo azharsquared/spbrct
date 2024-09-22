@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { VehicleResponse } from './Types';
 import axios from 'axios';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getVehicles,deleteVehicle } from './VehicleApi';
 import { DataGrid,GridCellParams,GridColDef } from '@mui/x-data-grid';
+import Snackbar from '@mui/material/Snackbar';
 
 interface VehicleListProps {
     // Define the props for your component here
@@ -15,7 +16,9 @@ interface VehicleListProps {
 
 
 const VehicleList: React.FC<VehicleListProps> = (props) => {
-    // Implement your component logic here
+    const [open, setOpen] = useState(false);
+    const queryClient = useQueryClient()
+
 
     const columns: GridColDef[] = [
         {field: 'brand', headerName: 'Brand', width: 200},
@@ -33,7 +36,14 @@ const VehicleList: React.FC<VehicleListProps> = (props) => {
             disableColumnMenu: true,
             renderCell: (params: GridCellParams) => (
             <button
-            onClick={() => mutate(params.id.toString())}
+            onClick={() => 
+                {
+                    if (window.confirm(`Are you sure you want to delete ${params.row.
+                    brand} ${params.row.model}?`)) {
+                mutate(params.id.toString()); }
+                    }
+            
+            }
             >
             Delete
             </button>
@@ -44,6 +54,9 @@ const VehicleList: React.FC<VehicleListProps> = (props) => {
     const { mutate } = useMutation(deleteVehicle, {
         onSuccess: () => {
         console.log("Vehicle deleted successfully");
+        setOpen(true);
+            queryClient.invalidateQueries({ queryKey: ['vehicles'] });
+            
         },
         onError: (err) => {
         console.error(err);
@@ -78,11 +91,20 @@ const VehicleList: React.FC<VehicleListProps> = (props) => {
             //         }
             //     </tbody>
             // </table>
+            <>
             <DataGrid
+            disableRowSelectionOnClick={true}
             rows={vehicleQuery.data}
             columns={columns}
             getRowId={row => row.id}
             />
+
+            <Snackbar
+            open={open}
+            autoHideDuration={2000}
+            onClose={() => setOpen(false)}
+            message="Car deleted" />
+            </>
         );
     }
 };
