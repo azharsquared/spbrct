@@ -6,16 +6,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { addVehicle } from './VehicleApi';
+import { Vehicle } from './Types';
+import VehicleDialogContent from './VehicleDialogContent';
 
-export type Vehicle = {
-    brand: string;
-    model: string;
-    color: string;
-    registrationNumber: string;
-    modelYear: number;
-    price: number;
-    description: string;
-}
 
 const AddVehicle: React.FC = () => {
 
@@ -69,7 +62,7 @@ const AddVehicle: React.FC = () => {
             <button onClick={handleClickOpen}>New vehicle</button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>New vehicle</DialogTitle>
-                <DialogContent>
+                {/* <DialogContent>
                     <input placeholder="Brand" name="brand"
                         value={vehicle.brand} onChange={handleChange} /><br />
                     <input placeholder="Model" name="model"
@@ -84,7 +77,8 @@ const AddVehicle: React.FC = () => {
                         value={vehicle.price} onChange={handleChange} /><br />
                         <input placeholder="Description" name="description"
                         value={vehicle.description} onChange={handleChange} /><br />
-                </DialogContent>
+                </DialogContent> */}
+                <VehicleDialogContent vehicle={vehicle} handleChange={handleChange} />
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
                     <Button onClick={handleSave}>Save</Button>

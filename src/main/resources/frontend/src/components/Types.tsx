@@ -16,4 +16,14 @@ export type VehicleResponse = {
             href: string;
         }
     };
+};
+
+export type Vehicle = {
+    brand: string;
+    model: string;
+    color: string;
+    registrationNumber: string;
+    modelYear: number;
+    price: number;
+    description: string;
 }

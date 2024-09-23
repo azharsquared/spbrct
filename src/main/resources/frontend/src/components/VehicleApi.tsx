@@ -1,4 +1,4 @@
-import { Vehicle } from './AddVehicle';
+import { Vehicle } from './Types';
 import { VehicleResponse } from './Types';
 import axios from 'axios';
 
