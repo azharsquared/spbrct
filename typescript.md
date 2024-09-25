@@ -69,3 +69,4 @@ const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 You can read the complete list of event types in the React TypeScript CheatSheet: 
 https://react-typescript-cheatsheet.netlify.app/docs/basic/gettingstarted/forms_and_events/.
 
+vite-plugin-checker (https://github.com/fi3ework/vite-plugin-checker). Type checking is done when we build a Vite app to production,

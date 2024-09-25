@@ -11,4 +11,5 @@ public interface OwnerRepository extends
         CrudRepository<Owner, Long> {
 
     Optional<Owner> findByFirstname(String firstName);
+
 }

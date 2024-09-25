@@ -23,7 +23,7 @@ public class Vehicle {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner")
     private Owner owner;
-    @Column(name="explanation", nullable=false, length=512)
+   // @Column(name="description", nullable=false, length=512)
     private String description;
 
     public Vehicle(String brand, String model, String color, String registrationNumber, int modelYear, int price, String description,Owner owner) {

@@ -50,14 +50,17 @@ public class JwtSecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws
             Exception {
-        http.csrf(AbstractHttpConfigurer::disable) //(csrf) -> csrf.disable()
-                .cors(withDefaults())
-                .sessionManagement((sessionManagement) -> sessionManagement.
-                        sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // commented code will allow POST requests to /login without authentication and rest of the requests will be authenticated
+        http.csrf((csrf) -> csrf.disable()).cors(withDefaults())
                 .authorizeHttpRequests((authorizeHttpRequests) ->
-                        authorizeHttpRequests.requestMatchers(HttpMethod.POST,
-                                "/login").permitAll().anyRequest().authenticated())
+                        authorizeHttpRequests.anyRequest().permitAll());
+//        http.csrf(AbstractHttpConfigurer::disable) //(csrf) -> csrf.disable()
+//                .cors(withDefaults())
+//                .sessionManagement((sessionManagement) -> sessionManagement.
+//                        sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                // commented code will allow POST requests to /login without authentication and rest of the requests will be authenticated
+//                .authorizeHttpRequests((authorizeHttpRequests) ->
+//                        authorizeHttpRequests.requestMatchers(HttpMethod.POST,
+//                                "/login").permitAll().anyRequest().authenticated())
                 //Role based auth : The
                 ///admin/** endpoint requires the ADMIN role for access and the /user/** endpoint requires the
                 //USER role for access
@@ -76,10 +79,10 @@ public class JwtSecurityConfiguration {
  //               .oauth2Login(withDefaults())
 //                .addFilterBefore(authenticationFilter,
 //                UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling((exceptionHandling) -> exceptionHandling.
-                        authenticationEntryPoint(exceptionHandler))
-                .logout(logout -> logout
-                        .addLogoutHandler(logoutHandler()));
+//                .exceptionHandling((exceptionHandling) -> exceptionHandling.
+//                        authenticationEntryPoint(exceptionHandler))
+//                .logout(logout -> logout
+//                        .addLogoutHandler(logoutHandler()));
         return http.build();
     }
 
