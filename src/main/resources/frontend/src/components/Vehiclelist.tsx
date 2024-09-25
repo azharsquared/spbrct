@@ -3,7 +3,7 @@ import { VehicleResponse } from './Types';
 import axios from 'axios';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getVehicles, deleteVehicle } from './VehicleApi';
-import { DataGrid, GridCellParams, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridCellParams, GridColDef ,GridToolbar} from '@mui/x-data-grid';
 import Snackbar from '@mui/material/Snackbar';
 import AddVehicle from './AddVehicle';
 import EditVehicle from './EditVehicle';
@@ -111,6 +111,7 @@ const VehicleList: React.FC<VehicleListProps> = (props) => {
                     rows={vehicleQuery.data}
                     columns={columns}
                     getRowId={row => row.id}
+                    slots={{ toolbar: GridToolbar }}
                 />
 
                 <Snackbar
