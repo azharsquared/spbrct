@@ -1,4 +1,4 @@
-import { Vehicle } from './Types';
+import { Vehicle, VehicleEntry } from './Types';
 import { VehicleResponse } from './Types';
 import axios from 'axios';
 
@@ -8,20 +8,30 @@ export const getVehicles = async (): Promise<VehicleResponse[]> => {
     return response.data;
 }
 
-export const deleteVehicle = async (id: string): Promise<VehicleResponse> =>
-    {
-     const response = await axios.delete(`${import.meta.env.VITE_API_URL}/user/vehicle/${id}`);
-     return response.data
-    }
+export const deleteVehicle = async (id: string): Promise<VehicleResponse> => {
+    const response = await axios.delete(`${import.meta.env.VITE_API_URL}/user/vehicle/${id}`);
+    return response.data
+}
 
 
-    // Add a new car
+// Add a new car
 export const addVehicle = async (vehicle: Vehicle): Promise<VehicleResponse> => {
     const response = await axios.post(`${import.meta.env.VITE_API_URL}/user/vehicle`, vehicle, {
-    headers: {
-    'Content-Type': 'application/json',
-    }, 
+        headers: {
+            'Content-Type': 'application/json',
+        },
     });
-    
+
     return response.data;
-   }
+}
+
+
+export const updateVehicle = async (vehicleEntry: VehicleEntry):
+    Promise<VehicleEntry> => {
+    const response = await axios.put(`${import.meta.env.VITE_API_URL}/user/vehicle/${vehicleEntry.id}`, vehicleEntry.vehicle, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
+    return response.data;
+}

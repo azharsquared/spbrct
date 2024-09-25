@@ -5,17 +5,18 @@ export type VehicleResponse = {
     registrationNumber: string;
     modelYear: number;
     price: number;
-    _links: {
-        self: {
-            href: string;
-        },
-        car: {
-            href: string;
-        },
-        owner: {
-            href: string;
-        }
-    };
+    id: string;
+    // _links: {
+    //     self: {
+    //         href: string;
+    //     },
+    //     car: {
+    //         href: string;
+    //     },
+    //     owner: {
+    //         href: string;
+    //     }
+    // };
 };
 
 export type Vehicle = {
@@ -27,3 +28,8 @@ export type Vehicle = {
     price: number;
     description: string;
 }
+
+export type VehicleEntry = {
+    vehicle: Vehicle;
+    id: string;
+   }
