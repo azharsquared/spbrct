@@ -6,6 +6,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import VehicleDialogContent from './VehicleDialogContent';
 import { updateVehicle } from './VehicleApi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import Button from '@mui/material/Button';
 
 type FormProps = {
     vehicledata: VehicleResponse;
@@ -65,15 +66,15 @@ function EditVehicle({ vehicledata }: FormProps) {
     }
     return (
         <>
-            <button onClick={handleClickOpen}>
+            <Button onClick={handleClickOpen}>
                 Edit
-            </button>
+            </Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Edit</DialogTitle>
                 <VehicleDialogContent vehicle={vehicle} handleChange={handleChange} />
                 <DialogActions>
-                    <button onClick={handleClose}>Cancel</button>
-                    <button onClick={handleSave}>Save</button>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleSave}>Save</Button>
                 </DialogActions>
             </Dialog>
         </>

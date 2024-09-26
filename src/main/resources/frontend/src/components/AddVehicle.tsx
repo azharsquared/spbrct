@@ -10,6 +10,7 @@ import { Vehicle } from './Types';
 import VehicleDialogContent from './VehicleDialogContent';
 
 
+
 const AddVehicle: React.FC = () => {
 
     const queryClient = useQueryClient();
@@ -59,7 +60,7 @@ const AddVehicle: React.FC = () => {
 
     return (
         <>
-            <button onClick={handleClickOpen}>New vehicle</button>
+            <Button onClick={handleClickOpen}>New vehicle</Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>New vehicle</DialogTitle>
                 {/* <DialogContent>

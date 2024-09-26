@@ -7,6 +7,7 @@ import { DataGrid, GridCellParams, GridColDef ,GridToolbar} from '@mui/x-data-gr
 import Snackbar from '@mui/material/Snackbar';
 import AddVehicle from './AddVehicle';
 import EditVehicle from './EditVehicle';
+import IconButton from '@mui/material/IconButton';
 
 interface VehicleListProps {
     // Define the props for your component here
@@ -48,7 +49,7 @@ const VehicleList: React.FC<VehicleListProps> = (props) => {
             filterable: false,
             disableColumnMenu: true,
             renderCell: (params: GridCellParams) => (
-                <button
+                <IconButton aria-label="delete" size="small"
                     onClick={() => {
                         if (window.confirm(`Are you sure you want to delete ${params.row.
                             brand} ${params.row.model}?`)) {
@@ -58,8 +59,8 @@ const VehicleList: React.FC<VehicleListProps> = (props) => {
 
                     }
                 >
-                    Delete
-                </button>
+                    <DeleteIcon fontSize="small" />
+                </IconButton>
             ),
         }
     ];
