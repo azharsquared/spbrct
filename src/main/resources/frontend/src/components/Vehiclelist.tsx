@@ -8,6 +8,7 @@ import Snackbar from '@mui/material/Snackbar';
 import AddVehicle from './AddVehicle';
 import EditVehicle from './EditVehicle';
 import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface VehicleListProps {
     // Define the props for your component here

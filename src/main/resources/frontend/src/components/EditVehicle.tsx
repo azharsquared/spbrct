@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Vehicle, VehicleResponse , VehicleEntry} from './Types';
+import { Vehicle, VehicleResponse, VehicleEntry } from './Types';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -7,6 +7,9 @@ import VehicleDialogContent from './VehicleDialogContent';
 import { updateVehicle } from './VehicleApi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import Tooltip from '@mui/material/Tooltip';
 
 type FormProps = {
     vehicledata: VehicleResponse;
@@ -54,10 +57,12 @@ function EditVehicle({ vehicledata }: FormProps) {
 
     const handleSave = () => {
         const id = vehicledata.id;
-        const carEntry: VehicleEntry = {vehicle, id}
+        const carEntry: VehicleEntry = { vehicle, id }
         mutate(carEntry);
-        setVehicle({ brand: '', model: '', color: '', registrationNumber:'',
-        modelYear: 0, price: 0 , description: ''});
+        setVehicle({
+            brand: '', model: '', color: '', registrationNumber: '',
+            modelYear: 0, price: 0, description: ''
+        });
         setOpen(false)
     }
 
@@ -66,9 +71,11 @@ function EditVehicle({ vehicledata }: FormProps) {
     }
     return (
         <>
-            <Button onClick={handleClickOpen}>
-                Edit
-            </Button>
+            <Tooltip title="Edit car">
+                <IconButton aria-label="edit" size="small" onClick={handleClickOpen}>
+                    <EditIcon fontSize="small" />
+                </IconButton>
+            </Tooltip>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Edit</DialogTitle>
                 <VehicleDialogContent vehicle={vehicle} handleChange={handleChange} />
